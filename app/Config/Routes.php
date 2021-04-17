@@ -38,6 +38,10 @@ $routes->get('/signup', function() {
 	return view('admin/auth/signup');
 });
 
+$routes->get('/example', function() {
+	return view('admin/example');
+});
+
 
 
 if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
