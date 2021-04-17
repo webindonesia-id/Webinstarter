@@ -4,9 +4,6 @@ namespace Config;
 
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
-
-// Load the system's routing file first, so that the app and ENVIRONMENT
-// can override as needed.
 if (file_exists(SYSTEMPATH . 'Config/Routes.php'))
 {
 	require SYSTEMPATH . 'Config/Routes.php';
@@ -33,11 +30,16 @@ $routes->get('/', function() {
 	return view('admin/dashboard');
 });
 
+$routes->get('/signin', function() {
+	return view('admin/auth/signin');
+});
+
+$routes->get('/signup', function() {
+	return view('admin/auth/signup');
+});
 
 
 
-
-if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php'))
-{
+if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
 	require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
