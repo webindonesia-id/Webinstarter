@@ -2,10 +2,13 @@
 
 namespace App\Controllers;
 
+use Config\Services;
 use CodeIgniter\Controller;
+use Psr\Log\LoggerInterface;
+use function App\Helpers\getSegment;
+
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Psr\Log\LoggerInterface;
 
 /**
  * Class BaseController
@@ -45,5 +48,7 @@ class BaseController extends Controller
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------
 		// E.g.: $this->session = \Config\Services::session();
+		$this->service = new Services;
+		helper('website');
 	}
 }

@@ -26,24 +26,30 @@ $routes->setAutoRoute(true);
 * Route Definitions
 * --------------------------------------------------------------------
 */
-$routes->get('/', function() {
-	return view('admin/dashboard');
+$routes->get('/', 'Admin/AuthController::index', ['as' => 'index', 'filter' => 'login:admin']);
+$routes->get('/admin/login', 'Admin/AuthController::index', ['as' => 'admin.login', 'filter' => 'login:admin']);
+$routes->post('/admin/login', 'Admin/AuthController::auth', ['as' => 'admin.auth', 'filter' => 'login:admin']);
+$routes->get('/admin/logout', 'Admin/AuthController::logout', ['as' => 'admin.logout']);
+
+
+
+$routes->group('/admin', ['filter' => 'auth:admin', 'namespace' => 'App\Controllers\Admin'], function($routes) {
+
+	/*
+	* --------------------------------------------------------------------
+	* Dashbor Modules
+	* --------------------------------------------------------------------
+	*/
+	$routes->get('dashboard', 'DashboardController::index', ['as' => 'dashboard']);
+
+	/*
+	* --------------------------------------------------------------------
+	* User Modules
+	* --------------------------------------------------------------------
+	*/
+	$routes->get('user', 'UserController::index', ['as' => 'user.index']);
+	$routes->post('user', 'UserController::store', ['as' => 'user.store']);
+	$routes->put('user', 'UserController::update', ['as' => 'user.update']);
+	$routes->get('user/(:num)/delete', 'UserController::delete/$1', ['as' => 'user.delete']);
+
 });
-
-$routes->get('/signin', function() {
-	return view('admin/auth/signin');
-});
-
-$routes->get('/signup', function() {
-	return view('admin/auth/signup');
-});
-
-$routes->get('/example', function() {
-	return view('admin/example');
-});
-
-
-
-if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
-	require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
-}

@@ -9,42 +9,39 @@
 -->
 <html lang="en">
     <head>
-
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
         <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-        <title><?= $this->renderSection('title'); ?> - Webinstarter</title>
-
+        <title><?= $this->renderSection('title'); ?> - WEBINCMS</title>
         <!-- CSS files -->
-        <link href="<?= base_url('/admin/css/tabler.min.css'); ?>" rel="stylesheet"/>
-        <link href="<?= base_url('/admin/css/tabler-flags.min.css'); ?>" rel="stylesheet"/>
-        <link href="<?= base_url('/admin/css/tabler-payments.min.css'); ?>" rel="stylesheet"/>
-        <link href="<?= base_url('/admin/css/tabler-vendors.min.css'); ?>" rel="stylesheet"/>
-        <link href="<?= base_url('/admin/css/demo.min.css'); ?>" rel="stylesheet"/>
-
-        <!-- CSS Section -->
+        <link href="<?= base_url('admin/css/tabler.min.css'); ?>" rel="stylesheet"/>
+        <link href="<?= base_url('admin/css/tabler-flags.min.css'); ?>" rel="stylesheet"/>
+        <link href="<?= base_url('admin/css/tabler-payments.min.css'); ?>" rel="stylesheet"/>
+        <link href="<?= base_url('admin/css/tabler-vendors.min.css'); ?>" rel="stylesheet"/>
+        <link href="<?= base_url('admin/css/demo.min.css'); ?>" rel="stylesheet"/>
+        
+        <!-- CSS Specific Page -->
         <?= $this->renderSection('css'); ?>
     </head>
-
+    
     <body class="antialiased">
         <div class="wrapper">
-            <!-- Header -->
-            <?= $this->include('admin/layouts/header'); ?>
 
             <!-- Navigation Bar -->
-            <?= $this->include('admin/layouts/navbar'); ?>
+            <?= $this->include('admin/layouts/sidebar'); ?>
+
+            <!-- Topbar -->
+            <?= $this->include('admin/layouts/topbar'); ?>
 
             <div class="page-wrapper">
-
                 <!-- Main Content -->
                 <?= $this->renderSection('content'); ?>
 
                 <!-- Footer -->
-                <?= $this->include('admin/layouts/footer'); ?>
+                <?php // $this->include('admin/layouts/footer'); ?>
             </div>
         </div>
 
-        <!-- Modal Example -->
         <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -148,12 +145,11 @@
             </div>
         </div>
 
-        <!-- JS Files -->
-        <script src="<?= base_url('/admin/libs/apexcharts/dist/apexcharts.min.js'); ?>"></script>
-        <script src="<?= base_url('/admin/js/tabler.min.js'); ?>"></script>
+        <!-- Libs JS -->
+        <script src="<?= base_url('admin/js/tabler.min.js'); ?>"></script>
 
-        <!-- JS Section -->
-        <?= $this->renderSection('js'); ?>
+        <!-- JS Specific Page -->
+        <?= $this->renderSection('js') ?>
+
     </body>
-
 </html>

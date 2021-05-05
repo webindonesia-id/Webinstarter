@@ -12,48 +12,66 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
         <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-        <title>Sign in - Webinstarter</title>
+        <title>Signin - WEBINCMS</title>
         <!-- CSS files -->
-        <link href="<?= base_url('/admin/css/tabler.min.css'); ?>" rel="stylesheet"/>
-        <link href="<?= base_url('/admin/css/tabler-flags.min.css'); ?>" rel="stylesheet"/>
-        <link href="<?= base_url('/admin/css/tabler-payments.min.css'); ?>" rel="stylesheet"/>
-        <link href="<?= base_url('/admin/css/tabler-vendors.min.css'); ?>" rel="stylesheet"/>
-        <link href="<?= base_url('/admin/css/demo.min.css'); ?>" rel="stylesheet"/>
+        <link href="<?= base_url('admin/css/tabler.min.css'); ?>" rel="stylesheet"/>
+        <link href="<?= base_url('admin/css/tabler-flags.min.css'); ?>" rel="stylesheet"/>
+        <link href="<?= base_url('admin/css/tabler-payments.min.css'); ?>" rel="stylesheet"/>
+        <link href="<?= base_url('admin/css/tabler-vendors.min.css'); ?>" rel="stylesheet"/>
+        <link href="<?= base_url('admin/css/demo.min.css'); ?>" rel="stylesheet"/>
+        <style>
+            .border-error {
+                border: 1px solid #d63939;
+            }
+
+            .text-error {
+                width: 100%;
+                margin-top: .25rem;
+                font-size: 85.7142857%;
+                color: #d63939;
+            }
+        </style>
     </head>
-    <body class="antialiased border-top-wide border-primary d-flex flex-column">
-        
-        
+    
+    <body class="antialiased border-top-wide border-primary d-flex flex-column ">
+
         <div class="page page-center">
             <div class="container-tight py-4">
                 <div class="text-center mb-4">
                     <a href=".">
-                        <img src="<?= base_url('/image/webin_logo.png'); ?>" height="36" alt="">
+                        <img src="<?= base_url('static/webincms_logo2.png'); ?>" height="36" alt="">
                     </a>
                 </div>
-                <form class="card card-md" action="." method="get" autocomplete="off">
+                <form class="card card-md" action="<?= route_to('admin.auth'); ?>" method="POST" autocomplete="off">
                     <div class="card-body">
                         <h2 class="card-title text-center mb-4">Login to your account</h2>
 
                         <div class="mb-3">
                             <label class="form-label">Email address</label>
-                            <input type="email" class="form-control" placeholder="Enter email">
+                            <input type="email" class="form-control <?= $validation->hasError('email') ? 'is-invalid' : ''; ?>" placeholder="Enter email" name="email" value="<?= old('email'); ?>">
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('email'); ?>
+                            </div>
                         </div>
-                        
+
                         <div class="mb-2">
                             <label class="form-label">
                                 Password
                                 <span class="form-label-description">
-                                    <a href="/forgot-password.html">I forgot password</a>
+                                    <a href="#">I forgot password</a>
                                 </span>
                             </label>
                             <div class="input-group input-group-flat">
-                                <input type="password" class="form-control"  placeholder="Password"  autocomplete="off" id="password">
-                                <span class="input-group-text">
-                                    <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip" id="togglePassword">
+                                <input type="password" class="form-control <?= $validation->hasError('password') ? 'is-invalid' : ''; ?>"  placeholder="Password" id="password" name="password" >
+                                <span class="input-group-text <?= $validation->hasError('password') ? 'border-error' : ''; ?>">
+                                    <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip" id="toggle-password">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="2" /><path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" /></svg>
                                     </a>
                                 </span>
                             </div>
+                            <?php if($validation->hasError('password')) : ?>
+                                <span class="text-error"><?= $validation->getError('password'); ?></span>
+                            <?php endif ?>
                         </div>
 
                         <div class="mb-2">
@@ -62,11 +80,11 @@
                                 <span class="form-check-label">Remember me on this device</span>
                             </label>
                         </div>
-
                         <div class="form-footer">
                             <button type="submit" class="btn btn-primary w-100">Sign in</button>
                         </div>
                     </div>
+
                     <div class="hr-text">or</div>
                     
                     <div class="card-body">
@@ -86,25 +104,28 @@
                         </div>
                     </div>
                 </form>
+
                 <div class="text-center text-muted mt-3">
-                    Don't have account yet? <a href="/signup" tabindex="-1">Sign up</a>
+                    If you have a problem, please contact Administrator.
+                    <!-- Don't have account yet? <a href="./sign-up.html" tabindex="-1">Sign up</a> -->
                 </div>
             </div>
         </div>
-        
+
         <!-- Tabler Core -->
-        <script src="<?= base_url('/admin/js/tabler.min.js'); ?>"></script>
+        <script src="<?= base_url('admin/js/tabler.min.js'); ?>"></script>
 
         <script>
-            let togglePassword = document.querySelector('#togglePassword');
-            let password = document.querySelector('#password');
-            togglePassword.addEventListener('click', function() {
-                if(password.type == 'password') {
-                    password.type = 'text';
-                } else  {
-                    password.type = 'password';
+            let toggle = document.querySelector('#toggle-password');
+            toggle.addEventListener('click', function() {
+                let passwordForm = document.querySelector('#password');
+                if(passwordForm.type == 'password') {
+                    passwordForm.type = 'text';
+                } else {
+                    passwordForm.type = 'password';
                 }
             });
         </script>
+        
     </body>
 </html>
